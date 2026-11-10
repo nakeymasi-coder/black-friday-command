@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Friday Command Generator — Glam Hustle Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--sapphire:#168FEA;--deep:#103B63;--black:#171A1E;--pearl:#ffffff;--silver:#c9d4e0;--gold:#f5c542}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:linear-gradient(160deg,#0a2547 0%,var(--deep) 45%,#0d4d80 100%);color:var(--black);min-height:100vh;padding:16px 12px 40px}
+.wrap{max-width:860px;margin:0 auto}
+header{text-align:center;padding:18px 8px 6px}
+.badge{display:inline-block;background:var(--black);color:#fff;font-weight:800;letter-spacing:2px;font-size:11px;padding:6px 14px;border-radius:999px;border:1px solid var(--silver)}
+h1{font-family:'Anton',sans-serif;color:#fff;font-size:clamp(30px,6vw,52px);line-height:1.05;margin:12px 0 4px;text-transform:uppercase}
+h1 .bf{color:var(--gold)}
+.sub{color:var(--silver);font-size:14px;font-weight:600}
+.card{background:var(--pearl);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.card h2{font-family:'Anton',sans-serif;font-size:20px;color:var(--deep);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+label{display:block;font-size:12px;font-weight:800;color:var(--deep);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px 12px;border:2px solid #d7e1ec;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:14px;background:#f7fafc}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sapphire)}
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.mode{border:2px solid #d7e1ec;background:#f7fafc;border-radius:14px;padding:13px 10px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13.5px;cursor:pointer;text-align:center;color:var(--deep);transition:.15s}
+.mode:hover{border-color:var(--sapphire)}
+.mode.active{background:var(--deep);color:#fff;border-color:var(--deep)}
+.mode span{display:block;font-size:20px;margin-bottom:4px}
+.genbtn{width:100%;background:linear-gradient(90deg,var(--sapphire),#0d6cb8);color:#fff;border:none;font-family:'Anton',sans-serif;font-size:21px;letter-spacing:1px;padding:15px;border-radius:14px;cursor:pointer;margin-top:14px;text-transform:uppercase;box-shadow:0 6px 18px rgba(22,143,234,.45)}
+.genbtn:active{transform:scale(.99)}
+#out{white-space:pre-wrap;background:#0e2233;color:#eaf4ff;border-radius:12px;padding:16px;font-size:13.5px;line-height:1.55;min-height:180px;font-family:'Montserrat',sans-serif}
+.row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.copybtn{flex:1;background:var(--black);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.altbtn{flex:1;background:#fff;color:var(--deep);border:2px solid var(--deep);padding:12px;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.tip{font-size:12.5px;color:#33536e;background:#e8f3fd;border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.5}
+footer{margin-top:22px;text-align:center}
+.footbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.footbtns a{text-decoration:none;font-weight:800;padding:13px 22px;border-radius:999px;font-size:14.5px}
+.join{background:linear-gradient(90deg,var(--gold),#e0a91c);color:#231a00}
+.shop{background:#fff;color:var(--deep);border:2px solid var(--silver)}
+.credit{color:var(--silver);font-size:12px;margin-top:14px}
+</style>
+<style>
+/* MOBILE PASS — phone-first readability + install */
+html{-webkit-text-size-adjust:100%}
+body{padding:12px 10px 48px}
+input,select,textarea{font-size:16px!important;min-height:48px}
+textarea{min-height:52px}
+.mode{min-height:64px}
+.out{font-size:15px;line-height:1.65}
+.genbtn{min-height:56px;font-size:18px}
+.row button{min-height:50px}
+@media (max-width:640px){
+  .fields{grid-template-columns:1fr!important}
+  .modes{grid-template-columns:1fr 1fr!important}
+  .card{padding:16px}
+  h1{font-size:30px}
+  .footbtns a{flex:1;text-align:center}
+}
+</style>
+<meta name="theme-color" content="#103B63">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BF Command">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="badge">GLAM HUSTLE HUB · NOV 25 – DEC 1</div>
+<h1>Black Friday<br><span class="bf">Command Generator</span></h1>
+<p class="sub">Commercials, video ads, flyers, captions, emails &amp; live scripts — written like a marketer, in your voice.</p>
+</header>
+
+<div class="card">
+<h2>1 · Your Offer</h2>
+<div class="grid">
+<div><label>Product / Offer</label>
+<select id="prod">
+<option>Everything Bundle</option>
+<option>The Glam Vault — Membership</option>
+<option>Glam Prompt Vault</option>
+<option>Agent Farm — Custom Build</option>
+<option>Build Your Own UGC Agent Farm</option>
+<option>Agent Farm Blueprint</option>
+<option>Pop-Up Shop Farm</option>
+<option>Christmas Came Early — Select Favorites</option>
+<option value="custom">Custom (type it below)</option>
+</select></div>
+<div><label>Custom product name</label><input id="customProd" placeholder="Only if you picked Custom"></div>
+<div><label>Regular price ($)</label><input id="regPrice" type="number" min="0" placeholder="e.g. 160"></div>
+<div><label>Black Friday price ($)</label><input id="bfPrice" type="number" min="0" placeholder="e.g. 97"></div>
+<div><label>Sale dates</label><input id="dates" value="Nov 25 – Dec 1"></div>
+<div><label>Discount wording</label><input id="pct" value="up to 46% off"></div>
+<div><label>Shop link</label><input id="cta" value="https://glamhustlehub.com/black-friday"></div>
+<div><label>Coupon code (optional)</label><input id="code" placeholder="e.g. BLACKFRIDAY"></div>
+<div><label>Tone</label>
+<select id="tone">
+<option value="sassy">Sassy &amp; Glam</option>
+<option value="heart">Warm &amp; Heart-First</option>
+<option value="urgent">Urgent Doorbuster</option>
+</select></div>
+<div><label>Star of the ad</label>
+<select id="star">
+<option>Renee &amp; Marcus (AI After 40 hosts)</option>
+<option>Animated characters</option>
+<option>Glam herself — UGC style</option>
+<option>Product only — no people</option>
+</select></div>
+</div>
+<div class="tip">💡 Marketer's rule baked in: every output leads with <b>who it's for</b> (women 40+ building with AI), <b>what it does for them</b>, and <b>the deadline</b>. Prices auto-calculate the savings when you fill both price boxes.</div>
+</div>
+
+<div class="card">
+<h2>2 · Pick What To Create</h2>
+<div class="modes" id="modes">
+<button class="mode active" data-mode="commercial"><span>📺</span>Commercial Script</button>
+<button class="mode" data-mode="story"><span>🎭</span>Story Commercial</button>
+<button class="mode" data-mode="videoprompt"><span>🎬</span>Video Ad Prompt</button>
+<button class="mode" data-mode="flyer"><span>🖼️</span>Flyer + Design Prompt</button>
+<button class="mode" data-mode="adcopy"><span>✍️</span>Ad Copy (FB / IG)</button>
+<button class="mode" data-mode="captions"><span>📱</span>Social Captions</button>
+<button class="mode" data-mode="pin"><span>📌</span>Pinterest Pin</button>
+<button class="mode" data-mode="email"><span>📧</span>Email Blast</button>
+<button class="mode" data-mode="live"><span>🎤</span>Live Selling Script</button>
+<button class="mode" data-mode="plan"><span>🗓️</span>7-Day Content Plan</button>
+</div>
+<button class="genbtn" id="gen">Generate ✨</button>
+</div>
+
+<div class="card">
+<h2>3 · Your Copy — Ready To Paste</h2>
+<div id="out">Pick a mode above and hit Generate. Your commercial, ad, flyer copy, caption, email or live script lands here, ready to copy.</div>
+<div class="row">
+<button class="copybtn" id="copy">📋 Copy</button>
+<button class="altbtn" id="again">🔀 Give me another version</button>
+</div>
+</div>
+
+<footer>
+<div class="footbtns">
+<a class="join" href="https://glamhustlehub.com/products/the-glam-vault">✨ Join The Glam Vault</a>
+<a class="shop" href="https://glamhustlehub.com">🛍️ Shop Glam Hustle Hub</a>
+<a class="shop" href="curriculum.html">📚 Student Curriculum</a>
+</div>
+<p class="credit">Black Friday Command Generator · made with ♥ by Indigo for Glam Hustle Hub</p>
+</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let mode='commercial', variant=0;
+const pick=(arr,v)=>arr[v%arr.length];
+function ctx(){
+  const prodSel=$('prod').value;
+  const prod=prodSel==='custom'?($('customProd').value.trim()||'my signature offer'):prodSel;
+  const reg=parseFloat($('regPrice').value)||0, bf=parseFloat($('bfPrice').value)||0;
+  const save=reg&&bf?Math.round(reg-bf):0;
+  const pctOff=reg&&bf?Math.round((reg-bf)/reg*100):0;
+  return {prod,reg,bf,save,pctOff,dates:$('dates').value.trim()||'Nov 25 – Dec 1',
+    pct:$('pct').value.trim()||'up to 46% off',cta:$('cta').value.trim()||'https://glamhustlehub.com/black-friday',
+    code:$('code').value.trim(),tone:$('tone').value,star:$('star').value};
+}
+const hooks={
+ sassy:["Stop scrolling, gorgeous — this is THE one.","Your business called. It wants a glow-up.","I didn't come this far to only come this far — and neither did you."],
+ heart:["If you've been waiting for a sign to start, love, this is it.","You don't need more time. You need the right tools, and a little belief.","Built for women who started later and refuse to finish last."],
+ urgent:["Doors are OPEN and the clock is loud.","When it's gone, it's gone — and it's going fast.","Black Friday prices end soon. Your excuses can wait, this can't."]};
+const aud="women 40+ building a business with AI";
+function priceLine(c){
+  if(c.reg&&c.bf)return `$${c.reg} → $${c.bf} (you save $${c.save}, ${c.pctOff}% off)`;
+  return c.pct;
+}
+function codeLine(c){return c.code?`\nUse code ${c.code} at checkout.`:"";}
+
+function genCommercial(c,v){
+  const h=pick(hooks[c.tone],v);
+  return `📺 BLACK FRIDAY COMMERCIAL SCRIPT — ${c.prod}
+Length: ~27 seconds · Star: ${c.star} · Sale: ${c.dates}
+
+HOOK (0–3s, on camera, big energy):
+"${h}"
+
+SHOT LIST + LINES:
+1. (0–3s) HOOK shot — star front and center, sapphire & chrome set, Black Friday glow behind them. Line: "${h}"
+2. (3–7s) PROBLEM — quick cuts: messy desk, half-finished ideas, "someday" energy. Line (VO): "Still piecing your business together one random tip at a time?"
+3. (7–12s) THE FIX — ${c.prod} revealed like a gift being unwrapped. Line: "Meet ${c.prod} — built for ${aud}."
+4. (12–17s) PROOF — star using it, results popping on screen: content made, products listed, sales notifications. Line: "Make it once. Sell it all season."
+5. (17–22s) THE OFFER — price card slams in: ${priceLine(c)}. Line: "Black Friday only — ${c.pct}, ${c.dates}."
+6. (22–27s) END CARD — chrome title "${c.prod}", sapphire button: glamhustlehub.com/black-friday. Line: "Doors close Dec 1. Go get yours."
+
+ON-SCREEN TEXT: BLACK FRIDAY · ${c.dates} · ${c.pct.toUpperCase()}
+MUSIC: upbeat original instrumental, holiday sparkle, never silent.
+RULES: one speaker per shot · dialogue word-for-word · real talking shots, no still photos.${codeLine(c)}`;
+}
+
+function genVideoPrompt(c,v){
+  const h=pick(hooks[c.tone],v+1);
+  return `🎬 VIDEO AD PROMPT — paste into your video/image tool
+Product: ${c.prod} · Star: ${c.star}
+
+SUBJECT: ${c.star==='Product only — no people'?'The product, hero shot, styled like a luxury gift reveal':c.star+' in a sapphire-and-chrome studio, Black Friday set dressing: gift boxes, soft gold sparkle, sale signage blurred in background'}
+OPENING FRAME: ${h}
+SETTING: Glam Hustle Hub studio — deep sapphire walls, chrome accents, pearl-white light, premium and warm.
+ACTION: A 3-scene mini-story — (1) the "before" frustration, (2) the product reveal with a glow moment, (3) the win: posting, selling, celebrating.
+WARDROBE/STYLE: Sapphire, chrome silver, pearl white, a hint of black. Butterflies welcome. No crowns.
+ON-SCREEN TEXT (exact, locked): "BLACK FRIDAY · ${c.dates}" and "${c.pct}" and end card "glamhustlehub.com/black-friday"
+FORMAT: Vertical 9:16 for TikTok/Reels, 15–27 seconds, photorealistic or polished animation to match the star, captions on.
+AUDIO: Real upbeat music bed + the script lines from the Commercial Script mode. Never silent, never a plain tone.
+CTA (spoken + text): "Link in bio — doors close Dec 1."${codeLine(c)}`;
+}
+
+function genFlyer(c,v){
+  const h=pick(hooks[c.tone],v+2);
+  return `🖼️ FLYER COPY (use as-is in Canva):
+HEADLINE: BLACK FRIDAY IS HERE
+SUB-HEADLINE: ${h}
+OFFER BLOCK: ${c.prod}
+${priceLine(c)} · ${c.dates}
+CTA BUTTON: SHOP NOW → glamhustlehub.com/black-friday${c.code?`\nCODE: ${c.code}`:""}
+FOOTER: Glam Hustle Hub · Made for ${aud}
+
+🎨 DESIGN PROMPT (paste into your image tool):
+A premium Black Friday sales flyer, vertical poster. Deep sapphire blue background with chrome silver foil accents and pearl-white text space. Anton-style bold condensed headline at top reading "BLACK FRIDAY", gold sparkle and gift-box elements at the edges, a hero product shot glowing center-frame, a sapphire pill button at the bottom. Clean, expensive, high-contrast, no clutter, butterflies as a subtle motif.`;
+}
+
+function genAdCopy(c,v){
+  const h=pick(hooks[c.tone],v);
+  return `✍️ FACEBOOK / INSTAGRAM AD COPY — ${c.prod}
+
+PRIMARY TEXT (version A):
+${h}
+${c.prod} is ${c.pct} for Black Friday — ${c.dates}. Made for ${aud} who are DONE guessing and ready to build something that sells.
+👉 ${c.cta}${codeLine(c)}
+Doors close Dec 1. After that, it's back to full price.
+
+PRIMARY TEXT (version B — short & punchy):
+Black Friday. ${c.pct}. ${c.prod}. Zero fluff, all system.
+${priceLine(c)} · ends Dec 1 → ${c.cta}
+
+HEADLINE: ${c.prod} — ${c.pct} Ends Dec 1
+DESCRIPTION: Built for women 40+ building with AI. Sale ends Dec 1.
+CTA BUTTON: Shop Now`;
+}
+
+function genCaptions(c,v){
+  const h=pick(hooks[c.tone],v+1);
+  return `📱 SOCIAL CAPTIONS — ${c.prod}
+
+TIKTOK / REELS:
+${h} 👀 ${c.prod} is ${c.pct} for Black Friday (${c.dates}) and I made it for ${aud}. Link in bio before Dec 1 eats it. 🦋💙
+#BlackFriday #AITools #WomenOver40 #DigitalProducts #GlamHustleHub #SmallBusinessTips
+
+FACEBOOK POST:
+${h}
+Real talk: ${c.prod} is the thing I wish someone had handed me when I started. This week it's ${priceLine(c)} — Black Friday, ${c.dates}.
+If you're building with AI and tired of doing everything the long way, this is your shortcut: ${c.cta}${codeLine(c)}
+💙 Like to save this for later, and tell me in the comments what you're building.
+
+THREADS:
+Black Friday at Glam Hustle Hub: ${c.prod}, ${c.pct}, ${c.dates}. For my 40+ builders who move quiet and sell loud. Doors close Dec 1 🦋 ${c.cta}`;
+}
+
+function genPin(c,v){
+  const h=pick(hooks[c.tone],v+2);
+  return `📌 PINTEREST PIN — ${c.prod}
+
+PIN TITLE: Black Friday Deal for Women 40+ Building With AI — ${c.prod} (${c.pct})
+DESCRIPTION: ${h} ${c.prod} is on sale for Black Friday, ${c.dates} — ${priceLine(c)}. A step-by-step system made for ${aud}: create it once, sell it all season. Save this pin so you don't lose the deal, then tap through to shop before doors close Dec 1.
+BOARD: AI Prompts & Creative Tools (or Black Friday board)
+LINK: ${c.cta}
+IMAGE DIRECTION: vertical 2:3, sapphire + chrome, big readable headline "BLACK FRIDAY — ${c.pct.toUpperCase()}", product hero shot, sparkle, no clutter.${codeLine(c)}`;
+}
+
+function genEmail(c,v){
+  return `📧 EMAIL BLAST — ${c.prod}
+
+SUBJECT LINES (pick one):
+1. 🚪 Doors are OPEN: ${c.pct} at Glam Hustle Hub
+2. Your Black Friday shortcut is inside, love
+3. Dec 1 it goes back to full price…
+
+BODY:
+Hey love,
+
+${pick(hooks[c.tone],v)}
+
+Black Friday is live at Glam Hustle Hub, and ${c.prod} is ${priceLine(c)} from ${c.dates}.
+
+I built this for ${aud} — women who are done collecting random tips and ready for a system that actually makes the content, the products, and the sales easier.
+
+Here's what to do:
+1. Tap here → ${c.cta}
+2. Grab ${c.prod} at the Black Friday price${c.code?`\n3. Use code ${c.code} at checkout`:""}
+
+When Dec 1 ends, so does this price. No extensions, no "oops I forgot" round two.
+
+With love and a little glitter,
+Glam 🦋
+Glam Hustle Hub
+
+P.S. Forward this to a friend who's building too. Sharing is caring, and she'll thank you at full price.`;
+}
+
+function genLive(c,v){
+  return `🎤 LIVE SELLING SCRIPT — ${c.prod} (${c.dates})
+
+OPENING (first 60 seconds — say it word for word):
+"Welcome in, loves! It's Black Friday week at Glam Hustle Hub and tonight I'm showing you the exact thing that's about to change how you build. Drop a 🦋 when you're in, tell me what you're working on — and stay, because the price I'm showing you tonight disappears Dec 1."
+
+ROTATION (loop every ~8 minutes for new joiners):
+1. THE STORY — "I built ${c.prod} because I was tired of…" (your real before/after, 90 seconds)
+2. THE DEMO — show it working live. Screen share or hold it up. Let them SEE the result, not just hear about it.
+3. THE OFFER — "${c.prod}: ${priceLine(c)}. Black Friday only, ${c.dates}."${c.code?`\n   Code word tonight: ${c.code}`:""}
+4. THE OBJECTION KILLERS — "You don't need to be techy. You don't need a big audience. You need a system and a start date — tonight is both."
+5. THE CTA — "Link is pinned / in my bio: glamhustlehub.com/black-friday. When you grab yours, come back and type GOT IT so I can celebrate you."
+
+CLOSING (last 2 minutes):
+"Doors close Dec 1 and this price does not come back. If you've been watching me build and thinking 'I want that' — this is the cheapest that want will ever be. Link's pinned. I love y'all — go build something gorgeous."
+
+REMINDERS: pin the link comment first · say the deadline every loop · shout out every GOT IT by name.`;
+}
+
+function genPlan(c,v){
+  return `🗓️ 7-DAY BLACK FRIDAY CONTENT PLAN — ${c.prod}
+
+NOV 25 (Doors Open): AM — "Doors are OPEN" reel using the Commercial Script. PM — Email Blast #1 + Gazette/Skool announcement.
+NOV 26 (Proof Day): Post a demo/result video (Video Ad Prompt mode). Stories: poll "what are you building this year?"
+NOV 27 (Black Friday): Go LIVE with the Live Selling Script, midday + evening encore. Pin post carries the offer + deadline.
+NOV 28 (Objection Day): Caption set B — "not techy? not a problem." Carousel or reel answering the top 3 questions.
+NOV 29 (Social Proof): Share wins, screenshots, member shoutouts. Pinterest Pin #2 with a fresh title.
+NOV 30 (Last Full Day): "Tomorrow it's gone" urgency reel + Email Blast #2 (use subject line 3).
+DEC 1 (Final Call): AM — final call post. 6 PM — LIVE last-chance. 10 PM — "doors closing" story + post. Dec 2: thank-you post + what to watch for next.
+
+Every asset above is one tap in this generator. Work the plan, love — don't wing the biggest week of the year.`;
+}
+
+function genStory(c,v){
+  const grumps=["Vera","Miss Pearl","Auntie Rose"]; const grump=pick(grumps,v);
+  const jokes=[`Bah — Builders Always Hustle. Keep up, butterfly.`,`I take it back. Shopping's easy. Selling's easier.`,`Fine. You were right. Don't let it go to your wings.`];
+  return `🎭 STORY COMMERCIAL — the "Glam Carol" structure (90 seconds)
+Product: ${c.prod} · Sale: ${c.dates} · Star casting: ${c.star}
+
+CONCEPT: A classic holiday tale, remixed. A grumpy skeptic who refuses to shop, build, or believe — visited by a whimsical guide who shows her how easy it all became. Nostalgia + humor + the product as the answer to every complaint.
+
+CAST:
+- ${grump.toUpperCase()} — the grump. Deadpan, arms crossed, allergic to trying. Never turns sweet — turns convinced.
+- THE GLAM BUTTERFLY — the guide. Sparkling, warm, unbothered. Your brand, your energy.
+
+SCRIPT:
+(0–8s) THE GRUMP — cold, dim, desaturated. ${grump} drowning in tabs, sticky notes, half-finished everything.
+${grump}: "Black Friday? Bah. Everything's a hassle, everything's a gimmick… and I still got nothing to sell."
+(8–18s) THE CATALYST — a sparkle; the Butterfly lands.
+BUTTERFLY: "Girl. We are not doing this again this year."
+${grump}: "Oh Lord. The butterfly talks."
+BUTTERFLY: "And you don't listen — that's why I'm here. Three stops. Hold my sparkle."
+(18–40s) STOP 1 — THE INSTANT FIX (light warms): the mess becomes one clean system — ${c.prod}. It lands instantly, delivered, glowing.
+${grump}: "…It just SHOWED UP?"
+BUTTERFLY: "Digital, baby. No line. No parking lot. No wrestling a stranger for the last one in the bin."
+(40–62s) STOP 2 — IT WORKS WHILE SHE RESTS (golden): ${c.prod} doing the work while ${grump} sips cocoa, feet up.
+${grump}: "It's working… while I sit here?"
+BUTTERFLY: "That's the whole point. You build it once. It hustles while you rest."
+(62–80s) STOP 3 — THE PROOF (full warm color): her first result lands — a sale, a post live, a win on screen.
+${grump}: "That's MINE?"
+BUTTERFLY: "Told you. Easy, affordable… and a little bit fun."
+(80–90s) THE FINAL JOKE + END CARD:
+${grump}: "Bah, humbug."
+BUTTERFLY: "Excuse me?"
+${grump}: "${pick(jokes,v)}"
+END CARD: ${c.prod} · BLACK FRIDAY ${c.dates} · ${c.pct} · glamhustlehub.com/black-friday
+
+PRODUCTION TIPS:
+1. Color tells the story: cold and grey before, warmer with every stop, full gold at the win.
+2. Every stop answers the grump's exact complaint — the product is the solution, never decoration.
+3. The comedy is chemistry: grump vs. guide. Cast voices for contrast, one speaker per shot, dialogue word-for-word.
+4. Real holiday instrumental under it all — warm, never silent.${codeLine(c)}`;
+}
+
+const gens={commercial:genCommercial,story:genStory,videoprompt:genVideoPrompt,flyer:genFlyer,adcopy:genAdCopy,captions:genCaptions,pin:genPin,email:genEmail,live:genLive,plan:genPlan};
+function render(){$('out').textContent=gens[mode](ctx(),variant);}
+$('modes').addEventListener('click',e=>{const b=e.target.closest('.mode');if(!b)return;document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;variant=0;render();});
+$('gen').addEventListener('click',()=>{variant=0;render();});
+$('again').addEventListener('click',()=>{variant++;render();});
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('out').textContent);$('copy').textContent='✅ Copied!';setTimeout(()=>$('copy').textContent='📋 Copy',1500);}catch(e){const r=document.createRange();r.selectNodeContents($('out'));const s=getSelection();s.removeAllRanges();s.addRange(r);}});
+render();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
+</script>
+</body>
+</html>
